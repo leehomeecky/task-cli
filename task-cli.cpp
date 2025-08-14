@@ -2,10 +2,28 @@
 //
 
 #include <iostream>
+#include <string>
+#include "temp_storage.h"
 
 int main()
 {
-    std::cout << "Hello World!\n";
+
+  std::unique_ptr<storage::IStorage<std::string>> temp_storage =
+      std::make_unique<storage::TempStorage<std::string>>();
+
+  temp_storage->create(1, std::string("meecky"));
+  temp_storage->create(2, std::string("leeho"));
+  temp_storage->create(3, std::string("leehomeecky"));
+  temp_storage->create(4, std::string("meeckyleeho"));
+  temp_storage->update(1, std::string("this is me"));
+  temp_storage->deleteById(2);
+
+  std::vector<std::string> value = temp_storage->read();
+  for (std::string var : value) {
+    std::cout << var << std::endl;
+  }
+    
+    return 0;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

@@ -6,13 +6,12 @@
 
 namespace storage {
 template <typename T, typename IDT = int>
-  requires std::copy_constructible<T> && std::equality_comparable<IDT>
-class temp_storage : public IStorage<IDT, T> {
+class TempStorage : public IStorage<T, IDT> {
  private:
   std::unordered_map<IDT, T> data;
 
  public:
-  temp_storage() = default;
+  TempStorage() = default;
 
   auto read() const -> std::vector<T> override;
   auto read(const IDT& id) const -> std::optional<T> override;
